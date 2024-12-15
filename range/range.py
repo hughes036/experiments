@@ -15,10 +15,11 @@ class Range:
         self.ranges.append((start, end))
     
     def remove(self, start, end):
+        # Find ranges that start / end partially overlap with, or are entirely contained by.
         ranges_to_update = [r for r in self.ranges if startInRange(start, r) or endInRange(end, r) or (start <= r[0] and end >= r[1])]
         for r in ranges_to_update:
             self.ranges.remove(r)
-            # does range being removed overlap with r?
+            # Does range being removed overlap with r partially?
             if start > r[0] or end < r[1]:
                 if start > r[0]:
                     self.add(r[0], start - 1)
